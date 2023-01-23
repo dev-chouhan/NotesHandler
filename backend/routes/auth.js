@@ -7,8 +7,8 @@ const jwt = require('jsonwebtoken');
 
 const JWD_SECRET = "Harryisabadboy";
 
-// Create a user using POST "/api/auth". No login requires
-router.post("/", [
+// Create a user using POST "/api/auth/createuser". No login requires
+router.post("/createuser", [
     body('name', 'Enter a valid Name!').isLength({ min: 3 }),
     body('email', 'Enter a valid Email!').isEmail(),
     body('password', 'Enter a valid Password!').isLength({ min: 5 }),
@@ -40,13 +40,49 @@ router.post("/", [
         }
 
         const authToken = jwt.sign(data, JWD_SECRET);
-
         res.json(authToken);
+
+
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("Some error occured");
+        res.status(500).send("nternal server error occured");
     }
 
 });
+
+// Authenticate a user using POST "/api/auth/login". No login requires
+router.post("/login", [
+    body('email', 'Enter a valid Email').isEmail(),
+    body('password', 'Password can not be blank').exists(),
+], async (req, res) => {
+    const errors = validationResult(req);
+    if (!errors.isEmpty()) {
+        return res.status(400).json({ errors: errors.array() });
+    }
+    const {email, password} = req.body;
+    try {
+        // We will check either user email will be presented or not and if it is correct or not.
+        let user = await User.findOne({email});
+        if(!user){
+            return res.status(400).json({error: "Please try to login in with correct credencials."});
+        }
+        const comparepassword = await bcrypt.compare(password, user.password); // returns either true or false;
+        if(!comparepassword){
+            return res.status(400).json({error: "Please try to login with correct credencials."});
+        }
+        const data = {
+            user:{
+                id: user.id,
+            }
+        };
+        const authToken = jwt.sign(data, JWD_SECRET);
+        res.send(authToken);
+
+    } catch (error) {
+        console.error(error.message);
+        res.status(500).send("Internal server error occured");
+    }
+}
+)
 
 module.exports = router
