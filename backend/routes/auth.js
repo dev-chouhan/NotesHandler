@@ -16,7 +16,7 @@ router.post("/createuser", [
 ], async (req, res) => {
     console.log(req.body);
     // If there are errors, return bad request and the error
-    const errors = validationResult(req);
+    const errors = validationResult(req); // errors will be a array
     if (!errors.isEmpty()) {
         return res.status(400).json({ errors: errors.array() });
     }
@@ -46,7 +46,7 @@ router.post("/createuser", [
 
     } catch (error) {
         console.error(error.message);
-        res.status(500).send("nternal server error occured");
+        res.status(500).send("Internal server error occured");
     }
 
 });
@@ -89,7 +89,7 @@ router.post("/login", [
 
 router.post("/getuser", fetchUser, async (req, res) => {
     try {
-        const user = await User.findById(req.user.id).select("-password");
+        const user = await User.findById(req.user.id).select("-password"); // get everything from user.id except password.
         res.send(user);
 
     } catch (error) {

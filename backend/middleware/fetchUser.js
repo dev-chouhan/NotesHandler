@@ -3,7 +3,7 @@ const JWD_SECRET = "Harryisabadboy";
 
 const fetchUser = (req, res, next)=>{
     // Get the user from the jwt token and add id to req object.
-    const token = req.header("auth-token");
+    const token = req.header("auth-token"); // created a header with name auth-token
     if(!token){
         res.status(401).send({error: "Please autheticate using a valid token 11111"});
     }
