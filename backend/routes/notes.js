@@ -24,13 +24,13 @@ router.post(
         body("description", "description must be atleast 5 character").isLength({min: 5}),
     ],
     async (req, res) => {
+        const { title, description, tag } = req.body;
+        // If there are errors, return bad request and the error. Here errors will be for title and description validation only.
+        const errors = validationResult(req); // errors will be a array
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
         try {
-            const { title, description, tag } = req.body;
-            // If there are errors, return bad request and the error. Here errors will be for title and description validation only.
-            const errors = validationResult(req); // errors will be a array
-            if (!errors.isEmpty()) {
-                return res.status(400).json({ errors: errors.array() });
-            }
             const note = new Note({
                 title,
                 description,

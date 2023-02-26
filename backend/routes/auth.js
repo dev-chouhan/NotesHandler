@@ -14,7 +14,7 @@ router.post("/createuser", [
     body('email', 'Enter a valid Email!').isEmail(),
     body('password', 'Enter a valid Password!').isLength({ min: 5 }),
 ], async (req, res) => {
-    console.log(req.body);
+    // console.log(req.body);
     // If there are errors, return bad request and the error
     const errors = validationResult(req); // errors will be a array
     if (!errors.isEmpty()) {
@@ -42,8 +42,6 @@ router.post("/createuser", [
 
         const authToken = jwt.sign(data, JWD_SECRET);
         res.json(authToken);
-
-
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal server error occured");
@@ -78,7 +76,6 @@ router.post("/login", [
         };
         const authToken = jwt.sign(data, JWD_SECRET);
         res.send(authToken);
-
     } catch (error) {
         console.error(error.message);
         res.status(500).send("Internal server error occured");
