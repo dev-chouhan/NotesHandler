@@ -16,5 +16,5 @@ app.get('/', (req, res)=>{
 });
 
 app.listen(port, ()=>{
-    console.log(`Examples are listed at http://localhost:${port}`);
+    console.log(`iNoteBook Backend is listed at http://localhost:${port}`);
 });
