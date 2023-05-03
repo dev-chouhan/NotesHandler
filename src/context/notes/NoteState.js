@@ -13,7 +13,7 @@ const NoteState = (props) => {
             "__v": 0
         },
         {
-            "_id": "63df8d26a518b0a2da140ed5",
+            "_id": "63df8d26a518b0a2da14550ed5",
             "user": "63db8730839f4eb6de4e2a6f",
             "title": "wanna make you mine",
             "description": "How about a coffee",
@@ -22,7 +22,7 @@ const NoteState = (props) => {
             "__v": 0
         },
         {
-            "_id": "63df8d26a518b0a2da140ed5",
+            "_id": "63df8d2689a518b0a2da140ed5",
             "user": "63db8730839f4eb6de4e2a6f",
             "title": "wanna make you mine",
             "description": "How about a coffee",
@@ -31,7 +31,7 @@ const NoteState = (props) => {
             "__v": 0
         },
         {
-            "_id": "63df8d26a518b0a2da140ed5",
+            "_id": "63df8d26a518b0hha2da140ed5",
             "user": "63db8730839f4eb6de4e2a6f",
             "title": "wanna make you mine",
             "description": "How about a coffee",
@@ -40,7 +40,7 @@ const NoteState = (props) => {
             "__v": 0
         },
         {
-            "_id": "63df8d26a518b0a2da140ed5",
+            "_id": "63df8d26a5h18b0a2da140ed5",
             "user": "63db8730839f4eb6de4e2a6f",
             "title": "wanna make you mine",
             "description": "How about a coffee",
@@ -49,7 +49,7 @@ const NoteState = (props) => {
             "__v": 0
         },
         {
-            "_id": "63df8d26a518b0a2da140ed5",
+            "_id": "63df8d26a518b0a2da17840ed5",
             "user": "63db8730839f4eb6de4e2a6f",
             "title": "wanna make you mine",
             "description": "How about a coffee",
@@ -60,8 +60,34 @@ const NoteState = (props) => {
     ]
     const [notes, setNotes] =  useState(notesInitials);
 
+    // Add a Note
+    const addNote = (title, description, tag) =>{
+        // API call
+        console.log("Addeing a new note");
+        const note = {
+            "_id": "63df8d26a518b0a672da17840ed5",
+            "user": "63db8730839f4eb6de4e2a6f",
+            "title": title,
+            "description": description,
+            "tag": tag,
+            "date": new Date(),
+            "__v": 0
+        }
+        setNotes(notes.concat(note));
+    }
+    // Delete a Note
+    const deleteNote = (id) =>{
+        console.log("Deleting note with id: " + id);
+        const newNotes = notes.filter((note)=>{return note._id !== id})
+        setNotes(newNotes);
+    }
+    // Edit a Note
+    const editNote = (id, title, description, tag) =>{
+        
+    }
+
     return (
-        <NoteContext.Provider value={{notes, setNotes}}>
+        <NoteContext.Provider value={{notes, addNote, deleteNote, editNote}}>
             {props.children}
         </NoteContext.Provider>
     )
