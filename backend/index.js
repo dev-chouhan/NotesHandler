@@ -1,9 +1,11 @@
 const connectToMongo = require('./db');
+const cors = require("cors");
 const express = require('express');
 const app = express();
 const port = 5000;
 connectToMongo();
 
+app.use(cors()); // This one is for fetching api through browser.
 app.use(express.json());
 
 // available routes
