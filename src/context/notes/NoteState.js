@@ -33,21 +33,10 @@ const NoteState = (props) => {
             body: JSON.stringify({title, description, tag})
         });
 
-        const json = await response.json();
-        console.log(json);
-
-        console.log("Adding a new note");
-        const note = {
-            "_id": "63df8d26a518b0a672da17840ed5",
-            "user": "63db8730839f4eb6de4e2a6f",
-            "title": title,
-            "description": description,
-            "tag": tag,
-            "date": new Date(),
-            "__v": 0
-        }
+        const note = await response.json();
         setNotes(notes.concat(note));
     }
+
     // Delete a Note
     const deleteNote = async(id) =>{
         // API calls
@@ -58,15 +47,13 @@ const NoteState = (props) => {
                 'auth-token': "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VyIjp7ImlkIjoiNjNkYjg3MzA4MzlmNGViNmRlNGUyYTZmIn0sImlhdCI6MTY3NTMzMjk5M30.1i8E4o169PPr4MKOo5K4CwEev4yZvSlijjyyxSH05uE",
             },
         });
-        const json = await response.json();
-        console.log(json);
         const newNotes = notes.filter((note)=>{return note._id !== id})
         setNotes(newNotes);
     }
+
     // Edit a Note
     const editNote = async(id, title, description, tag) =>{
         // API calls
-        console.log(id);
         const response = await fetch(`${host}/api/notes/updateNode/${id}`,{
             method: 'PUT',
             headers:{
@@ -75,8 +62,6 @@ const NoteState = (props) => {
             },
             body: JSON.stringify({title, description, tag})
         });
-        const json = await response.json();
-        console.log(json);
 
         let newNotes = JSON.parse(JSON.stringify(notes)); // to create deep copy for notes
         // log in to edit the notes/files
