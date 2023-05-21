@@ -18,9 +18,9 @@ const Signup = (props) => {
         });
         const json = await response.json();
         console.log(json);
-        // save the authtoken and redirect and here is no need to check for correct credeintials;
+        // save the authToken and redirect and here is no need to check for correct credeintials;
         if(json.success){
-            localStorage.setItem("token", json.authtoken);
+            localStorage.setItem("auth-token", json.authToken);
             navigate('/');
             props.showAlert("Successfully Signed In", "success");
         } else {
@@ -33,7 +33,8 @@ const Signup = (props) => {
     }
 
     return (
-        <div className='container'>
+        <div className='container mt-3'> 
+            <h1>Sign Up here...</h1> <br /><br />
             <form onSubmit={handleSubmit}>
                 <div className="mb-3">
                     <label htmlFor="name" className="form-label">Name</label>

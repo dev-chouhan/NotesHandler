@@ -2,13 +2,19 @@ import React, { useContext, useEffect, useRef, useState } from 'react';
 import noteContext from "../context/notes/NoteContext";
 import Noteitem from './Noteitem';
 import Addnote from './Addnote';
+import { useNavigate } from 'react-router-dom';
 
 const Notes = (props) => {
     const { notes, getNotes, editNote } = useContext(noteContext);
     const [note, setNote] = useState({id:"", etitle:"", edescription:"", etag:""});
+    let navigate = useNavigate();
 
     useEffect(() => {
-        getNotes();
+        if(localStorage.getItem('auth-token')) {
+            getNotes();
+        } else {
+            navigate("/login");
+        }
     }, []);
     const ref = useRef(null);
     const refClose = useRef(null);
@@ -47,16 +53,16 @@ const Notes = (props) => {
 
                             <form>
                                 <div className="mb-3">
-                                    <label htmlFor="etitle" className="form-label" value={note.etitle} >Title</label>
-                                    <input type="text" className="form-control" onChange={onChange} id="etitle" name='etitle' minLength={5} required aria-describedby="emailHelp" />
+                                    <label htmlFor="etitle" className="form-label">Title</label>
+                                    <input type="text" className="form-control"  value={note.etitle}  onChange={onChange} id="etitle" name='etitle' minLength={5} required aria-describedby="emailHelp" />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="edescription" className="form-label" value={note.edescription}>Description</label>
-                                    <input type="text" className="form-control" onChange={onChange} id="edescription" minLength={5} required name='edescription' />
+                                    <label htmlFor="edescription" className="form-label">Description</label>
+                                    <input type="text" className="form-control" value={note.edescription} onChange={onChange} id="edescription" minLength={5} required name='edescription' />
                                 </div>
                                 <div className="mb-3">
-                                    <label htmlFor="etag" className="form-label" value={note.etag}>Tag</label>
-                                    <input type="text" className="form-control" onChange={onChange} id="etag" required name='etag' />
+                                    <label htmlFor="etag" className="form-label">Tag</label>
+                                    <input type="text" className="form-control"  value={note.etag} onChange={onChange} id="etag" required name='etag' />
                                 </div>
                             </form>
 
