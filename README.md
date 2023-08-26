@@ -2,7 +2,7 @@
 
 ## How to start this project in your environment
 1. clone the project to any folder
-2. open terminal, type "npx create-react-app my-app"
+2. open terminal, type "npx create-react-app my-app" (execption)
 3. in terminal, type "npm i"
 4. to see project working, use "npm run both" in terminal. And project will be displayed at your default browser.
 
